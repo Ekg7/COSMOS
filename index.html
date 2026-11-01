@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="COSMOS – Explore Beyond. Discover Everything. An interactive Solar System explorer with planet data, mission simulation and space facts." />
+  <title>COSMOS – Explore Beyond. Discover Everything.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Exo+2:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300&family=Space+Mono:wght@400;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+</head>
+
+<body>
+  <canvas id="stars-canvas" aria-hidden="true"></canvas>
+
+  <nav id="navbar" role="navigation" aria-label="Main navigation">
+    <div class="nav-container">
+      <a href="#hero" class="nav-logo" aria-label="COSMOS Home">
+        <span class="logo-icon">🔵</span>
+        <span class="logo-text">COSMOS</span>
+      </a>
+      <button class="hamburger" id="hamburger-btn" aria-label="Toggle navigation menu" aria-expanded="false"
+        aria-controls="nav-links">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" id="nav-links" role="list">
+        <li><a href="#hero" class="nav-link" data-section="hero">Home</a></li>
+        <li><a href="#solar-system" class="nav-link" data-section="solar-system">Solar System</a></li>
+        <li><a href="#planet-explorer" class="nav-link" data-section="planet-explorer">Planet Explorer</a></li>
+        <li><a href="#space-facts" class="nav-link" data-section="space-facts">Space Facts</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    <section id="hero" class="section hero-section" aria-label="Hero">
+      <div class="hero-bg" aria-hidden="true">
+        <img src="assets/images/hero-bg.png" alt="" class="hero-bg-img" />
+        <div class="hero-overlay"></div>
+      </div>
+      <div class="particles-container" id="particles" aria-hidden="true"></div>
+      <div class="hero-content">
+        <div class="hero-badge"><span class="status-dot"></span><span>SYSTEM ONLINE &nbsp;·&nbsp; ALL SYSTEMS
+            NOMINAL</span></div>
+        <h1 class="hero-title">
+          <span class="title-line">EXPLORE THE</span>
+          <span class="title-line accent-text">UNKNOWN</span>
+        </h1>
+        <p class="hero-subtitle">Your journey through our Solar System begins here.<br />Navigate worlds, discover
+          science, launch your mission.</p>
+        <div class="hero-buttons">
+          <a href="#solar-system" class="btn btn-primary" id="btn-explore" role="button"><span
+              class="btn-icon">◎</span>EXPLORE SOLAR SYSTEM</a>
+        </div>
+        <div class="hero-stats" aria-label="Solar system statistics">
+          <div class="stat-item"><span class="stat-number" data-target="8">0</span><span
+              class="stat-label">Planets</span></div>
+          <div class="stat-divider" aria-hidden="true"></div>
+          <div class="stat-item"><span class="stat-number" data-target="1">0</span><span class="stat-label">Star</span>
+          </div>
+          <div class="stat-divider" aria-hidden="true"></div>
+          <div class="stat-item"><span class="stat-number">∞</span><span class="stat-label">Discoveries</span></div>
+        </div>
+      </div>
+      <div class="scroll-indicator" aria-hidden="true"><span>SCROLL TO EXPLORE</span>
+        <div class="scroll-arrow"></div>
+      </div>
+    </section>
+
+    <section id="solar-system" class="section solar-section" aria-label="Solar System Explorer">
+      <div class="section-header">
+        <p class="section-tag">SECTION 01</p>
+        <h2 class="section-title">Solar System <span class="accent-text">Explorer</span></h2>
+        <p class="section-sub">Click on any planet to discover its secrets</p>
+      </div>
+      <div class="solar-system-container" id="solar-system-visual" aria-label="Interactive solar system diagram">
+        <div class="orbit-system" id="orbit-system">
+          <div class="sun-wrapper" id="sun-orb" aria-label="The Sun">
+            <div class="sun-glow" aria-hidden="true"></div>
+            <div class="sun-body"><img src="assets/images/Sun.jpe" alt="The Sun" class="sun-img" /></div>
+            <span class="sun-label">SUN</span>
+          </div>
+          <div id="orbits-container" aria-live="polite"></div>
+        </div>
+      </div>
+      <div class="planet-grid-selector" id="planet-grid-selector" aria-label="Planet selection grid"></div>
+      <div class="selected-planet-bar" id="selected-planet-bar" aria-live="polite">
+        <span class="selected-label">SELECTED:</span>
+        <span class="selected-name" id="selected-bar-name">None</span>
+        <span class="selected-hint">→ See details below</span>
+      </div>
+    </section>
+
+    <section id="planet-explorer" class="section explorer-section" aria-label="Planet Explorer">
+      <div class="section-header">
+        <p class="section-tag">SECTION 02</p>
+        <h2 class="section-title">Planet <span class="accent-text">Explorer</span></h2>
+        <p class="section-sub">Deep-dive into each world scientific profile</p>
+      </div>
+      <div class="explorer-layout">
+        <div class="planet-card" id="planet-card" aria-live="polite" aria-label="Planet information panel">
+          <div class="planet-card-image-wrap">
+            <div class="planet-card-glow" id="planet-card-glow" aria-hidden="true"></div>
+            <img src="assets/images/Earth.png" alt="Earth" class="planet-card-img" id="planet-card-img" />
+          </div>
+          <div class="planet-card-info">
+            <h3 class="planet-card-name" id="planet-card-name">Earth</h3>
+            <p class="planet-card-order" id="planet-card-order">3rd Planet from the Sun</p>
+            <p class="planet-card-desc" id="planet-card-desc">Our home planet – a vibrant, water-covered world teeming
+              with life.</p>
+          </div>
+          <div class="planet-nav-arrows">
+            <button class="planet-nav-btn" id="prev-planet-btn" aria-label="Previous planet">&#8592; PREV</button>
+            <div class="planet-nav-dots" id="planet-nav-dots" aria-label="Planet position indicator"></div>
+            <button class="planet-nav-btn" id="next-planet-btn" aria-label="Next planet">NEXT &#8594;</button>
+          </div>
+        </div>
+        <div class="planet-stats-panel" id="planet-stats-panel" aria-label="Planet statistics">
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-card-icon">🌡️</div>
+              <div class="stat-card-label">Avg Temperature</div>
+              <div class="stat-card-value" id="val-temperature">15°C</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-card-icon">⚖️</div>
+              <div class="stat-card-label">Gravity</div>
+              <div class="stat-card-value" id="val-gravity">9.8 m/s²</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-card-icon">⭕</div>
+              <div class="stat-card-label">Diameter</div>
+              <div class="stat-card-value" id="val-diameter">12,742 km</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-card-icon">📏</div>
+              <div class="stat-card-label">Distance from Sun</div>
+              <div class="stat-card-value" id="val-distance">149.6M km</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-card-icon">🔄</div>
+              <div class="stat-card-label">Length of Day</div>
+              <div class="stat-card-value" id="val-day">24 hours</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-card-icon">🔭</div>
+              <div class="stat-card-label">Orbital Period</div>
+              <div class="stat-card-value" id="val-year">365.25 days</div>
+            </div>
+          </div>
+          <div class="planet-facts-block" id="planet-facts-block">
+            <h4 class="facts-title">🔵 Interesting Facts</h4>
+            <ul class="planet-facts-list" id="planet-facts-list" aria-label="Planet facts"></ul>
+          </div>
+          <div class="compare-section" id="compare-section">
+            <button class="btn btn-compare" id="compare-toggle-btn" aria-expanded="false"
+              aria-controls="compare-panel">⇄ COMPARE PLANETS</button>
+            <div class="compare-panel" id="compare-panel" hidden>
+              <label for="compare-select" class="compare-label">Compare with:</label>
+              <select id="compare-select" class="compare-select" aria-label="Select planet to compare">
+                <option value="">— Select a planet —</option>
+              </select>
+              <div class="compare-result" id="compare-result" aria-live="polite"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="space-facts" class="section facts-section" aria-label="Space Facts">
+      <div class="section-header">
+        <p class="section-tag">SECTION 03</p>
+        <h2 class="section-title">Did You <span class="accent-text">Know?</span></h2>
+        <p class="section-sub">Fascinating facts about our Solar System</p>
+      </div>
+      <div class="facts-display" aria-live="polite" aria-label="Space fact display">
+        <div class="fact-card glass-card" id="fact-card">
+          <div class="fact-number" id="fact-number">01</div>
+          <div class="fact-category" id="fact-category">SOLAR SYSTEM</div>
+          <blockquote class="fact-text" id="fact-text">Loading an incredible space fact just for you…</blockquote>
+          <div class="fact-source" id="fact-source"></div>
+        </div>
+        <button class="btn btn-fact" id="discover-fact-btn" aria-label="Discover another space fact"><span
+            class="btn-icon">✦</span>DISCOVER ANOTHER FACT</button>
+        <div class="fact-dots" id="fact-dots" aria-label="Fact progress indicator" role="list"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" aria-label="Site footer">
+    <div class="footer-inner">
+      <div class="footer-logo"><span class="logo-icon">🔵</span><span class="logo-text">COSMOS</span></div>
+      <p class="footer-tagline">Explore Beyond · Discover Everything</p>
+      <p class="footer-note">Educational simulation. All planetary data is scientifically accurate. No real spacecraft
+        are launched.</p>
+      <p class="footer-copy">&copy; 2026 COSMOS Interactive Explorer. Built with HTML5 · CSS3 · Vanilla JS.</p>
+    </div>
+  </footer>
+
+  <script src="js/planets.js"></script>
+  <script src="js/facts.js"></script>
+  <script src="js/main.js"></script>
+</body>
+
+</html>
