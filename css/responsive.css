@@ -1,5 +1,5 @@
 @media (min-width: 1400px) {
-  .solar-system-container { max-width: 960px; }
+  .solar-system-container { max-width: 960px; height: 600px; }
   .explorer-layout { grid-template-columns: 380px 1fr; }
 }
 
