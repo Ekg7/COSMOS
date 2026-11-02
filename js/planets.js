@@ -13,7 +13,7 @@ const PLANETS = [
     glowColor: 'rgba(180, 140, 100, 0.5)',
     orbitRadius: 78,
     orbitDuration: 8,
-    planetSize: 12,
+    planetSize: 16,
     orbitStartDeg: 20,
     facts: [
       'Mercury has no moons.',
@@ -36,7 +36,7 @@ const PLANETS = [
     glowColor: 'rgba(255, 200, 80, 0.5)',
     orbitRadius: 121,
     orbitDuration: 14,
-    planetSize: 18,
+    planetSize: 22,
     orbitStartDeg: 110,
     facts: [
       'Venus is the brightest natural object in the night sky after the Moon.',
@@ -59,7 +59,7 @@ const PLANETS = [
     glowColor: 'rgba(50, 130, 255, 0.5)',
     orbitRadius: 169,
     orbitDuration: 20,
-    planetSize: 20,
+    planetSize: 25,
     orbitStartDeg: 220,
     facts: [
       'Earth is the densest planet in the Solar System.',
@@ -82,7 +82,7 @@ const PLANETS = [
     glowColor: 'rgba(220, 80, 50, 0.5)',
     orbitRadius: 217,
     orbitDuration: 28,
-    planetSize: 16,
+    planetSize: 20,
     orbitStartDeg: 300,
     facts: [
       'Olympus Mons on Mars is the tallest volcano in the Solar System at 21 km.',
@@ -105,7 +105,7 @@ const PLANETS = [
     glowColor: 'rgba(210, 150, 80, 0.5)',
     orbitRadius: 269,
     orbitDuration: 38,
-    planetSize: 36,
+    planetSize: 44,
     orbitStartDeg: 60,
     facts: [
       'Jupiter has at least 95 known moons.',
@@ -128,7 +128,7 @@ const PLANETS = [
     glowColor: 'rgba(200, 170, 100, 0.5)',
     orbitRadius: 317,
     orbitDuration: 50,
-    planetSize: 30,
+    planetSize: 38,
     orbitStartDeg: 160,
     facts: [
       'Saturn\'s rings extend up to 282,000 km from the planet.',
@@ -151,7 +151,7 @@ const PLANETS = [
     glowColor: 'rgba(80, 210, 200, 0.5)',
     orbitRadius: 360,
     orbitDuration: 66,
-    planetSize: 24,
+    planetSize: 30,
     orbitStartDeg: 255,
     facts: [
       'Uranus tilts at 98° — it essentially rolls around the Sun.',
@@ -174,7 +174,7 @@ const PLANETS = [
     glowColor: 'rgba(60, 80, 220, 0.5)',
     orbitRadius: 400,
     orbitDuration: 82,
-    planetSize: 22,
+    planetSize: 28,
     orbitStartDeg: 340,
     facts: [
       'Neptune has the strongest winds of any planet — up to 2,100 km/h.',
@@ -481,15 +481,47 @@ function initCompareToggle() {
   const btn = document.getElementById('compare-toggle-btn');
   const panel = document.getElementById('compare-panel');
   const sel = document.getElementById('compare-select');
+  const result = document.getElementById('compare-result');
   if (!btn || !panel) return;
 
-  btn.addEventListener('click', () => {
-    const expanded = btn.getAttribute('aria-expanded') === 'true';
-    btn.setAttribute('aria-expanded', !expanded);
-    panel.hidden = expanded;
-});
+  let lastComparedIndex = null;
 
-  if (sel) sel.addEventListener('change', () => handleCompare(sel.value));
+  btn.addEventListener('click', () => {
+    if (panel.hidden) {
+      panel.hidden = false;
+      btn.setAttribute('aria-expanded', 'true');
+      if (sel && sel.value !== '') {
+        handleCompare(sel.value);
+        lastComparedIndex = sel.value;
+      }
+    } else {
+      if (sel && sel.value !== '' && (!result || result.innerHTML === '' || sel.value !== lastComparedIndex)) {
+        handleCompare(sel.value);
+        lastComparedIndex = sel.value;
+      } else {
+        panel.hidden = true;
+        btn.setAttribute('aria-expanded', 'false');
+        lastComparedIndex = null;
+      }
+    }
+  });
+
+  if (sel) {
+    sel.addEventListener('change', () => {
+      if (result) result.innerHTML = '';
+      lastComparedIndex = null;
+    });
+
+    sel.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        if (sel.value !== '') {
+          handleCompare(sel.value);
+          lastComparedIndex = sel.value;
+        }
+      }
+    });
+  }
 }
 
 function initPlanets() {
